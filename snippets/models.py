@@ -11,7 +11,7 @@ class Snippet(models.Model):
     created = models.DateTimeField(auto_now_add=True, verbose_name='생성 날짜/시각')
     title = models.CharField(max_length=100, blank=True, default='', verbose_name='제목')
     code = models.TextField(verbose_name='코드')
-    linenoes = models.BooleanField(default=False)
+    linenos = models.BooleanField(default=False)
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100, verbose_name='언어')
     style = models.CharField(choices=STYLES_CHOICES, default='friendly', max_length=100, verbose_name='스타일')
 
