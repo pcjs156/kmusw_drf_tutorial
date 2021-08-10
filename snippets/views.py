@@ -7,7 +7,7 @@ from snippets.serializers import SnippetSerializer
 
 
 @api_view(['GET', 'POST'])
-def snippet_list(request):
+def snippet_list(request, format=None):
     """
     모든 code snippet의 목록을 반환하거나, 새 snippet을 생성함
     """
@@ -26,7 +26,7 @@ def snippet_list(request):
 
 
 @api_view(['GET', 'POST', 'DELETE'])
-def snippet_detail(request, pk):
+def snippet_detail(request, pk, format=None):
     """
     code snippet의 조회, 수정, 삭제를 수행함
     """
