@@ -1,5 +1,7 @@
 from django.db import models
-from pygments.lexers import get_all_lexers
+from pygments import highlight
+from pygments.formatters.html import HtmlFormatter
+from pygments.lexers import get_all_lexers, get_lexer_by_name
 from pygments.styles import get_all_styles
 
 LEXERS = [item for item in get_all_lexers() if item[1]]
@@ -22,3 +24,14 @@ class Snippet(models.Model):
         verbose_name = '스니펫'
         verbose_name_plural = '스니펫 목록'
         ordering = ['created']
+
+    def save(self, *args, **kwargs):
+        """
+        코드 스니펫의 하이라이트 처리된 HTML 표현을 생성하기 위해 `pygments` 라이브러리를 사용함
+        """
+        lexer = get_lexer_by_name(self.language)
+        linenos = 'table' if self.linenos else False
+        options = {'title': self.title} if self.title else {}
+        formatter = HtmlFormatter(style=self.style, linenos=linenos, full=True, **options)
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(Snippet, self).save(*args, **kwargs)
