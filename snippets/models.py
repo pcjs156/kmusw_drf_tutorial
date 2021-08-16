@@ -15,6 +15,9 @@ class Snippet(models.Model):
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100, verbose_name='언어')
     style = models.CharField(choices=STYLES_CHOICES, default='friendly', max_length=100, verbose_name='스타일')
 
+    owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE, verbose_name='소유자')
+    highlighted = models.TextField(verbose_name='하이라이팅된 HTML 텍스트')
+
     class Meta:
         verbose_name = '스니펫'
         verbose_name_plural = '스니펫 목록'
